@@ -1,0 +1,1 @@
+robocopy E:\Torrents\Completed E:\Working\Converted /MOV /LOG:"D:\Logs\log%date%.txt" /TS /FP /NP /TEE /NDL
