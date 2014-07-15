@@ -1,4 +1,5 @@
 '''
+REQUIRES eyed3 to be installed
 import_mp3(filepath)
         Takes file in filepath and movies it into the music library in the following format:
                 base/Artist/Album/song.mp3

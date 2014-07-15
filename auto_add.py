@@ -1,4 +1,5 @@
 '''
+REQUIRES watchdog to be installed
 To imitate what iTunes does to the Automatically Add to iTunes folder
 Detects new mp4 files and mp3 files in this directory.
 mp4 files are treated as movies and added to the movie library
@@ -56,55 +57,4 @@ if __name__ == "__main__":
         event_handler.stop()
         observer.stop()
     observer.join()
-'''
-def import_mp3():
-	basedir = "D:\Library\Automatically Add to iTunes"
-	librarybase = "D:\Library\Music"
-	newpath = librarybase
-	print "Before main loop"
-	print basedir
-	print librarybase
-	for r,d,f in os.walk(basedir):
-		print "Walking %s" % basedir
-		for file in f:
-			print "Processing %s" % file
-			filepath = os.path.join(r, file)
-			x = eyed3.load(filepath)
-			artist = x.tag.artist
-			album = x.tag.album
-			print "%s by %s" % (album, artist)
-			#re.sub(r'<>:"\/|?*', '', album)
-			#re.sub(r'<>:"\/|?*', '', artist)
-			newpath = os.path.join(librarybase, artist, album)
-			if not os.path.exists(newpath):
-				os.makedirs(newpath)
-			mp3path = os.path.join(newpath, file)
-			os.rename(filepath, mp3path)
-			print "Moved %s to %s" % (filepath, mp3path)
-			
-def import_mp4():
-	basedir = "D:\Library\Automatically Add to iTunes"
-	librarybase="D:\Library\Movies"
-	newpath = librarybase
-	print "Before main loop"
-	for r,d,f in os.walk(basedir):
-		print "Walking %s" % basedir
-		for file in f:
-			name=os.path.basename(file)
-			foldername=name[:-4].replace("_","")
-			foldername=foldername.split("(")[0]
-			newpath=librarybase+"\\"+foldername
-			
-			if not os.path.exists(newpath):
-				os.makedirs(newpath)
-			
-			for x in range(0,3):
-				try:
-					os.rename(filepath, librarybase+"\\"+name)
-					return
-				except Exception as e:
-					print e
-					print "Trying again in 5 seconds"
-					sleep(5)
-					
-'''
+
