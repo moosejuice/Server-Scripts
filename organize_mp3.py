@@ -18,8 +18,15 @@ def import_mp3(filepath):
 	errordir=os.path.join(basedir,"Errors")
 
 	x = eyed3.load(filepath)
-	artist = x.tag.artist
-	album = x.tag.album
+	print "Successfully Loaded: ", filepath
+	try:
+                artist = x.tag.artist.rstrip()
+        except Exception:
+                artist = "Unknown Artist"
+        try:
+                album = x.tag.album.rstrip()
+        except Exception:
+                album = "Unknown Album"
 	print "\tIdentified as: %s by %s" % (album, artist)
 	#re.sub(r'<>:"\/|?*', '', album)
 	#re.sub(r'<>:"\/|?*', '', artist)
@@ -30,9 +37,11 @@ def import_mp3(filepath):
 	for x in range(0,5):
                 try:
                         os.rename(filepath, mp3path)
-                        print "\tMoved %s to %s" % (filepath, mp3path)
+                        print "\tMoved to: ", mp3path
                         return
                 except Exception as e:
+                        print filepath, mp3path
+                        print e
                         if 32 == e.args[0] or 13 == e.args[0]:
                                 print "\tError 32. File in use. Try again in 5 seconds"
                                 sleep(5)

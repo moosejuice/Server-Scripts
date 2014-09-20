@@ -35,7 +35,10 @@ class MyHandler(PatternMatchingEventHandler):
                 print "Processing :", os.path.basename(event.src_path)
 		if event.src_path.endswith(".mp4"):
 			sleep(4)
-			import_mp4(event.src_path)
+			try:
+                            import_mp4(event.src_path)
+                        except Exception as e:
+                            print "Error encountered: ", e
 		else:
 			sleep(1)
 			import_mp3(event.src_path)

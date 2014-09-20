@@ -2,7 +2,6 @@ import os, shutil, stat, time
 
 """
 python script to move files in downloaded directory out of folders into the root. Then delete the folders.
-ie: flattens a specified directory.
 Also removes non video files. ie: txt files, .nfo
 Aug 7, 2013     - delete .jpg files
                 - move .mp3 files directly into iTunes library.
@@ -14,6 +13,8 @@ Add try catch on file operatoins.
 April 16, 2014  - turn to function, add recursive calls to properly flatten more than depth of 1 folder
 April 27, 2014  - delete files containing 'sample' that are less than 30MB. Have no use for sample files.
 May 27, 2014    - delete .bmp files
+June 19, 2014   - delete .html files
+
 Need to convert .m4a to mp3 before adding to iTunes
 """
 root = 'E:\Torrents\Completed'
@@ -42,38 +43,46 @@ def flatten(srcPath):
         log.write("Dest File exists already %s\n" %destFile)
        else:
         try:
-            if (srcFile.endswith(".txt")):
+            if (srcFile.upper().endswith(".TXT")):
              print "Deleting %s" %srcFile
              log.write("Deleting %s\n" %srcFile)
              os.remove(srcFile)
-            elif (srcFile.endswith(".gif")):
+            elif (srcFile.upper().endswith(".GIF")):
              print "Deleting %s" %srcFile
              log.write("Deleting %s\n" %srcFile)
              os.remove(srcFile)          
-            elif (srcFile.endswith(".nfo")):
+            elif (srcFile.upper().endswith(".NFO")):
              print "Deleting %s" %srcFile
              log.write("Deleting %s\n" %srcFile)
              os.remove(srcFile)
-            elif (srcFile.endswith(".png")):
-             print "Deleting %s" %srcFilelog.write()
-             log.write("Deleting %s\n" %srcFile)
-             os.remove(srcFile)
-            elif (srcFile.endswith(".jpg")):
+            elif (srcFile.upper().endswith(".PNG")):
              print "Deleting %s" %srcFile
              log.write("Deleting %s\n" %srcFile)
              os.remove(srcFile)
-            elif (srcFile.endswith(".mp3")):
+            elif (srcFile.upper().endswith(".JPG")):
+             print "Deleting %s" %srcFile
+             log.write("Deleting %s\n" %srcFile)
+             os.remove(srcFile)
+            elif (srcFile.upper().endswith(".JPEG")):
+             print "Deleting %s" %srcFile
+             log.write("Deleting %s\n" %srcFile)
+             os.remove(srcFile)
+            elif (srcFile.upper().endswith(".MP3")):
              log.write("Moving to iTunes add Folder %s\n" % srcFile)
              shutil.move(srcFile, addToiTunes)
-            elif (srcFile.endswith(".srt")):
+            elif (srcFile.upper().endswith(".SRT")):
              print "Deleting %s" %srcFile
              log.write("Deleting %s\n" %srcFile)
              os.remove(srcFile)
-            elif (srcFile.endswith(".m3u")):
+            elif (srcFile.upper().endswith(".M3U")):
              print "Deleting %s" %srcFile
              log.write("Deleting %s\n" %srcFile)
              os.remove(srcFile)
-            elif (srcFile.endswith(".bmp")):
+            elif (srcFile.upper().endswith(".BMP")):
+             print "Deleting %s" % srcFile
+             log.write("Deleting %s\n" % srcFile)
+             os.remove(srcFile)
+            elif (srcFile.upper().endswith(".HTML")):
              print "Deleting %s" % srcFile
              log.write("Deleting %s\n" % srcFile)
              os.remove(srcFile)
@@ -85,8 +94,9 @@ def flatten(srcPath):
             else:
              shutil.move(srcFile, destDir)
              log.write("Moving %s to %s\n" %(srcFile, destDir))
-        except:
+        except Exception as e:
             errors.write("Error Processing %s\n" % srcFile)
+            errors.write("\t%s" % e)
      for dir in dirs:
          newdir = os.path.join(srcDir, dir)
          log.write("\nFlattening %s\n" % newdir)
