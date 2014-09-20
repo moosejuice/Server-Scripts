@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-#from sickbeard piratebay version. Modified to tag and sort media into appropriate library folder structure.
+
 import sys
 import os
 import guessit
